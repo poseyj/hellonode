@@ -11,6 +11,7 @@ node("node") {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
         sh "whoami"
+        sh "groups"
         app = docker.build("poseyj/hellonode")
     }
 
