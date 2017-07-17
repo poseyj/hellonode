@@ -1,4 +1,5 @@
-node("node") {
+//node("node") {
+node {
     def app
 
     stage('Clone repository') {
@@ -12,7 +13,7 @@ node("node") {
          * docker build on the command line */
         sh "whoami"
         sh "groups"
-        app = docker.build("poseyj/hellonode")
+        //app = docker.build("poseyj/hellonode")
     }
 
     stage('Test image') {
