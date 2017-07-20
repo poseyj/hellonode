@@ -1,10 +1,14 @@
 //node("node") {
 node {
     def app
+    def imageTag = "gcr.io/${project}/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
+
+    stage('Building image') {
+        sh echo ${imageTag}
+    }
 
     stage('Clone repository') {
         /* Let's make sure we have the repository cloned to our workspace */
-
         checkout scm
     }
 
@@ -13,6 +17,7 @@ node {
          * docker build on the command line */
         sh "whoami"
         sh "groups"
+        
         //app = docker.build("poseyj/hellonode")
     }
 
