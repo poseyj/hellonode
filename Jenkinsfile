@@ -4,7 +4,7 @@ node {
     def imageTag = "gcr.io/${project}/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
 
     stage('Building image') {
-        sh echo ${imageTag}
+        sh "echo ${imageTag}"
     }
 
     stage('Clone repository') {
