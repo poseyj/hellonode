@@ -1,10 +1,10 @@
 //node("node") {
 node {
     def app
-    def imageTag = "gcr.io/${project}/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
+    //def imageTag = "gcr.io/${project}/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
 
     stage('Building image') {
-        sh "echo ${imageTag}"
+        sh "echo image tag"
     }
 
     stage('Clone repository') {
