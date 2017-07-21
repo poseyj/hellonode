@@ -19,7 +19,8 @@ node {
         sh "whoami"
         sh "groups"
         //sh("docker build -t ${imageTag} .")
-        app = docker.build("poseyj/hellonode")
+        sh "docker build -t test ."
+        //app = docker.build("poseyj/hellonode")
     }
 
     stage('Test image') {
