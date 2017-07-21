@@ -9,7 +9,7 @@ volumes:[
     hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
 ]){
 
-node {
+node('jenkins-pipeline') {
     def app
     def appName = 'hellonode'
     def imageTag = "${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
