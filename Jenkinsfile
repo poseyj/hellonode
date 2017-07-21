@@ -55,5 +55,6 @@ node('jenkins-pipeline') {
             app.push("latest")
         }
         */
+      }
     }
 }
