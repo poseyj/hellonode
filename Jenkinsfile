@@ -1,5 +1,5 @@
 //node("node") {
-node("jnlp") {
+node {
     def app
     def appName = 'hellonode'
     def imageTag = "${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
