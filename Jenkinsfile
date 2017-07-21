@@ -1,4 +1,14 @@
-//node("node") {
+podTemplate(label: 'jenkins-pipeline', containers: [
+    containerTemplate(name: 'jnlp', image: 'jenkinsci/jnlp-slave:2.62', args: '${computer.jnlpmac} ${computer.name}', workingDir: '/home/jenkins', resourceRequestCpu: '200m', resourceLimitCpu: '200m', resourceRequestMemory: '256Mi', resourceLimitMemory: '256Mi'),
+    containerTemplate(name: 'docker', image: 'docker:1.12.6',       command: 'cat', ttyEnabled: true),
+    containerTemplate(name: 'nodejs', image: 'nodejs:boron', command: 'cat', ttyEnabled: true),
+    containerTemplate(name: 'helm', image: 'lachlanevenson/k8s-helm:v2.5.0', command: 'cat', ttyEnabled: true),
+    containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl:v1.4.8', command: 'cat', ttyEnabled: true)
+],
+volumes:[
+    hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
+]){
+
 node {
     def app
     def appName = 'hellonode'
@@ -14,12 +24,15 @@ node {
     }
 
     stage('Build image') {
-        /* This builds the actual image; synonymous to
-         * docker build on the command line */
-        sh "whoami"
-        sh "groups"
-        //sh("docker build -t ${imageTag} .")
-        sh "docker build -t test ."
+        
+        container('nodejs') {
+            /* This builds the actual image; synonymous to
+            * docker build on the command line */
+            sh "whoami"
+            sh "groups"
+            //sh("docker build -t ${imageTag} .")
+            sh "docker build -t test ."
+        }
         //app = docker.build("poseyj/hellonode")
     }
 
