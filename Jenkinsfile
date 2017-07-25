@@ -10,10 +10,7 @@ podTemplate(label: 'node1', containers: [
     stage('Build a NodeJS project') {
       container('nodejs') {
         stage('Checkout') {
-          sh """
           checkout scm
-          node -v
-          """
         }
         stage('Version') {
           sh """
