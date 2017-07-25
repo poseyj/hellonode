@@ -2,19 +2,22 @@
  * This pipeline describes a multi container job, running Maven and Golang builds
  */
 
-podTemplate(label: 'node1', 
+podTemplate(label: 'pipeline', 
   containers: [
-    containerTemplate(name: 'nodejs', image: 'node:boron', ttyEnabled: true, command: 'cat')
+    containerTemplate(name: 'nodejs', image: 'node:boron', ttyEnabled: true, command: 'cat'),
+    containerTemplate(name: 'docker', image: 'docker:1.12.6',       command: 'cat', ttyEnabled: true)
   ],
   volumes: [hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock')]
   ) {
 
-  node('node1') {
-    stage('Build a NodeJS project') {
+  node('pipeline') {
+
+    stage('Checkout') {
+      checkout scm
+    }
+    
+    stage('Build') {
       container('nodejs') {
-        stage('Checkout') {
-          checkout scm
-        }
         stage('Version') {
           sh """
           node -v
@@ -24,14 +27,18 @@ podTemplate(label: 'node1',
         stage('Install') {
           sh """
           npm install
+          ls -als
           """
         }
       }
     }
     stage('Docker') {
-      sh """
-      docker -v
-      """
+      container('docker') {
+        sh """
+        docker -v
+        ls -als
+        """
+      }
     }
     
   }
