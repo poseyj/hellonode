@@ -3,17 +3,15 @@
  */
 
 podTemplate(label: 'maven-golang', containers: [
-  containerTemplate(name: 'golang', image: 'golang:1.8.0', ttyEnabled: true, command: 'cat')
+  containerTemplate(name: 'nodejs', image: 'node:boron', ttyEnabled: true, command: 'cat')
   ]) {
 
   node('maven-golang') {
-    stage('Build a Golang project') {
+    stage('Build a NodeJS project') {
       git url: 'https://github.com/hashicorp/terraform.git'
-      container('golang') {
+      container('nodejs') {
         sh """
-        mkdir -p /go/src/github.com/hashicorp
-        ln -s `pwd` /go/src/github.com/hashicorp/terraform
-        cd /go/src/github.com/hashicorp/terraform && make core-dev
+        node -v
         """
       }
     }
