@@ -2,9 +2,12 @@
  * This pipeline describes a multi container job, running Maven and Golang builds
  */
 
-podTemplate(label: 'node1', containers: [
-  containerTemplate(name: 'nodejs', image: 'node:boron', ttyEnabled: true, command: 'cat')
-  ]) {
+podTemplate(label: 'node1', 
+  containers: [
+    containerTemplate(name: 'nodejs', image: 'node:boron', ttyEnabled: true, command: 'cat')
+  ],
+  volumes: [hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock')]
+  ) {
 
   node('node1') {
     stage('Build a NodeJS project') {
