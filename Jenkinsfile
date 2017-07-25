@@ -18,6 +18,11 @@ podTemplate(label: 'node1', containers: [
           ls -als
           """
         }
+        stage('Install') {
+          sh """
+          npm install
+          """
+        }
       }
     }
 
