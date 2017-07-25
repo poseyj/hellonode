@@ -1,22 +1,20 @@
-/**
- * This pipeline describes a multi container job, running Maven and Golang builds
- */
+podTemplate(label: 'mypod', containers: [
+  containerTemplate(name: 'debian', image: 'debian', ttyEnabled: true, command: 'cat'),
+  containerTemplate(name: 'ubuntu', image: 'ubuntu', ttyEnabled: true, command: 'cat')
+]) {
+  node('mypod') {
+    container('debian') {
+      stage('stage 1') {
+        sh 'echo hello'
+        sh 'sleep 5'
+        sh 'echo world'
+      }
 
-podTemplate(label: 'maven-golang', containers: [
-  containerTemplate(name: 'golang', image: 'golang:1.8.0', ttyEnabled: true, command: 'cat')
-  ]) {
-
-  node('maven-golang') {
-    stage('Build a Golang project') {
-      git url: 'https://github.com/hashicorp/terraform.git'
-      container('golang') {
-        sh """
-        mkdir -p /go/src/github.com/hashicorp
-        ln -s `pwd` /go/src/github.com/hashicorp/terraform
-        cd /go/src/github.com/hashicorp/terraform && make core-dev
-        """
+      stage('stage 2') {
+        sh 'echo hello'
+        sh 'sleep 5'
+        sh 'echo world'
       }
     }
-
   }
 }
