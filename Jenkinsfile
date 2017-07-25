@@ -26,13 +26,13 @@ podTemplate(label: 'node1',
           npm install
           """
         }
-        stage('Docker') {
-          sh """
-          docker -v
-          """
-        }
       }
     }
-
+    stage('Docker') {
+      sh """
+      docker -v
+      """
+    }
+    
   }
 }
