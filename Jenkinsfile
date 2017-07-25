@@ -2,17 +2,25 @@
  * This pipeline describes a multi container job, running Maven and Golang builds
  */
 
-podTemplate(label: 'maven-golang', containers: [
+podTemplate(label: 'node1', containers: [
   containerTemplate(name: 'nodejs', image: 'node:boron', ttyEnabled: true, command: 'cat')
   ]) {
 
-  node('maven-golang') {
+  node('node1') {
     stage('Build a NodeJS project') {
-      git url: 'https://github.com/hashicorp/terraform.git'
       container('nodejs') {
-        sh """
-        node -v
-        """
+        stage('Checkout') {
+          sh """
+          checkout scm
+          node -v
+          """
+        }
+        stage('Version') {
+          sh """
+          node -v
+          ls -als
+          """
+        }
       }
     }
 
