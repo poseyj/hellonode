@@ -23,6 +23,11 @@ podTemplate(label: 'node1', containers: [
           npm install
           """
         }
+        stage('Docker') {
+          sh """
+          docker -v
+          """
+        }
       }
     }
 
