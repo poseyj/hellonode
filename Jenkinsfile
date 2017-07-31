@@ -4,6 +4,7 @@ node {
           docker.image('node:boron').inside {
             stage "check version"
                 sh "node -v"
+                sh "whoami"
                   
             stage "install"
                 sh "pwd"
