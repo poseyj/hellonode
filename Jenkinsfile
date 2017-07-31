@@ -6,6 +6,8 @@ node {
                 sh "node -v"
                   
             stage "install"
+                sh "pwd"
+                sh "ls -als"
                 sh "npm install"
           }
 }
