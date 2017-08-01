@@ -1,6 +1,7 @@
 # use a node base image
 FROM node:boron
 
+RUN usermod -a -G docker jenkins
 # set maintainer
 #LABEL maintainer "miiro@getintodevops.com"
 
