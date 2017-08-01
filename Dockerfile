@@ -1,9 +1,14 @@
 # use a node base image
-FROM node:7-onbuild
+FROM node:6.11.1
 
-#RUN usermod -a -G docker jenkins
-# set maintainer
-#LABEL maintainer "miiro@getintodevops.com"
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+ARG NODE_ENV
+ENV NODE_ENV $NODE_ENV
+COPY package.json /usr/src/app/
+RUN npm install && npm cache clean --force
+COPY . /usr/src/app
 
 # set a health check
 HEALTHCHECK --interval=5s \
@@ -12,3 +17,5 @@ HEALTHCHECK --interval=5s \
 
 # tell docker what port to expose
 EXPOSE 8000
+
+CMD [ "npm", "start" ]
