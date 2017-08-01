@@ -1,5 +1,5 @@
 # use a node base image
-FROM node:boron
+FROM node:7-onbuild
 
 #RUN usermod -a -G docker jenkins
 # set maintainer
